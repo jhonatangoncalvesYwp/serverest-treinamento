@@ -61,6 +61,29 @@ function responde (porta) {
   })
 }
 
+// Os testes do treinamento entram com este administrador. O ServeRest só traz
+// o fulano@qa.com; sem este passo, todo login do material falharia.
+const ADMIN = {
+  nome: 'Administrador do Treinamento',
+  email: 'admin.treinamento@qa.com',
+  password: 'treino123',
+  administrador: 'true'
+}
+
+async function garantirAdmin () {
+  const api = `http://localhost:${PORTA_API}`
+  const { usuarios } = await (await fetch(`${api}/usuarios?email=${ADMIN.email}`)).json()
+  const atual = usuarios[0]
+  if (atual && atual.password === ADMIN.password && atual.administrador === 'true') return
+  // Alterado por algum teste: exclui e recria, como o preparar-ambiente do treinamento.
+  if (atual) await fetch(`${api}/usuarios/${atual._id}`, { method: 'DELETE' })
+  await fetch(`${api}/usuarios`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(ADMIN)
+  })
+}
+
 function subir ({ nome, args }) {
   const filho = spawn(process.execPath, args, { stdio: ['ignore', 'pipe', 'pipe'] })
   filho.stderr.on('data', dado => {
@@ -95,11 +118,13 @@ function subir ({ nome, args }) {
 
   for (let tentativa = 0; tentativa < 60; tentativa++) {
     if (await responde(PORTA_API) && await responde(PORTA_LOJA)) {
+      await garantirAdmin()
       console.log(`
   ServeRest local pronto
 
   Loja:  http://localhost:${PORTA_LOJA}
   API:   http://localhost:${PORTA_API}
+  Admin: ${ADMIN.email} / ${ADMIN.password}
 
   Deixe este terminal aberto durante a aula. Ctrl+C encerra.
 `)

@@ -8,7 +8,7 @@
     "zerar": "node zerar.js"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "dependencies": {
     "serve": "14.2.6",

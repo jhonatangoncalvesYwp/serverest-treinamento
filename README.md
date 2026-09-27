@@ -8,11 +8,17 @@ a base é apagada a cada poucos minutos, qualquer pessoa pode alterar os
 usuários que o seu teste usa, e com a turma inteira rodando ao mesmo tempo
 ele bloqueia por excesso de requisições (HTTP 429). Aqui, a base é só sua.
 
-## Antes da aula (uma vez)
+## Na primeira aula (uma vez)
 
-Precisa do **Node.js 18 ou mais novo** — o mesmo que o Cypress já exige.
+Precisa do **Node.js 20 ou mais novo** (o mesmo que o Cypress 15 exige) e do
+**Git**. O passo a passo completo, com a instalação dos dois, está na apostila
+do treinamento, seção 1.3.
+
+Num PowerShell (no Mac, no Terminal), uma linha de cada vez:
 
 ```bash
+mkdir C:\treinamento
+cd C:\treinamento
 git clone https://github.com/jhonatangoncalvesYwp/serverest-treinamento.git
 cd serverest-treinamento
 npm install
@@ -21,6 +27,7 @@ npm install
 ## Em toda aula
 
 ```bash
+cd C:\treinamento\serverest-treinamento
 npm start
 ```
 
@@ -31,12 +38,19 @@ Quando aparecer:
 
   Loja:  http://localhost:3001
   API:   http://localhost:3000
+  Admin: admin.treinamento@qa.com / treino123
 ```
 
-abra a loja no navegador e confira que a tela de login aparece.
+abra a loja no navegador e entre com o admin: aparece **Bem Vindo
+Administrador do Treinamento**.
 
-**Deixe este terminal aberto** durante a aula inteira. Os comandos do Cypress
-rodam em **outro** terminal. `Ctrl+C` encerra.
+**Deixe esta janela aberta** durante a aula inteira: ela é a loja. Minimize,
+não feche. Os comandos do Cypress rodam no terminal do VS Code. `Ctrl+C`
+encerra.
+
+> Rode a loja numa janela de PowerShell própria, **não** no terminal do VS
+> Code: abrir outra pasta no VS Code fecha os terminais da janela, e a loja
+> morreria junto.
 
 ## No projeto Cypress
 
@@ -50,13 +64,12 @@ env: {
 }
 ```
 
-## Usuário administrador
+## Usuários administradores
 
-Toda base nova vem com um administrador:
-
-| E-mail | Senha |
-|---|---|
-| `fulano@qa.com` | `teste` |
+| E-mail | Senha | |
+|---|---|---|
+| `admin.treinamento@qa.com` | `treino123` | **O do treinamento.** O `npm start` garante que ele existe e está correto — se algum teste o alterou, é recriado |
+| `fulano@qa.com` | `teste` | O que o ServeRest traz de fábrica |
 
 ## Começar do zero
 
@@ -72,7 +85,8 @@ npm run zerar
 | Sintoma | O que fazer |
 |---|---|
 | `A porta 3000 (API) já está em uso` ou `3001 (Loja)` | Há outro `npm start` aberto em algum terminal. Feche-o, ou reinicie a máquina |
-| A loja abre, mas o login não faz nada | A API não está no ar. Confira se o terminal do `npm start` continua aberto |
+| A loja abre, mas o login não faz nada | A API não está no ar. Confira se a janela do `npm start` continua aberta |
+| Login com o admin do treinamento falha | Algum teste alterou o admin. `Ctrl+C` e `npm start` de novo: ele é recriado |
 | `npm install` falha na rede da empresa | Proxy corporativo. Rode o `npm install` de casa, antes da aula |
 
 ## De onde vem cada parte
