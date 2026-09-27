@@ -1,0 +1,17 @@
+{
+  "name": "serverest-treinamento",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ServeRest (API + loja) rodando na máquina do aluno, para o treinamento de Cypress",
+  "scripts": {
+    "start": "node iniciar.js",
+    "zerar": "node zerar.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "serve": "14.2.6",
+    "serverest": "3.2.2"
+  }
+}
