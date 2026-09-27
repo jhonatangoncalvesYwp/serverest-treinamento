@@ -10,15 +10,29 @@ ele bloqueia por excesso de requisições (HTTP 429). Aqui, a base é só sua.
 
 ## Na primeira aula (uma vez)
 
-Precisa do **Node.js 20 ou mais novo** (o mesmo que o Cypress 15 exige) e do
-**Git**. O passo a passo completo, com a instalação dos dois, está na apostila
-do treinamento, seção 1.3.
+Funciona em **Windows, Mac e Linux**. Precisa do **Node.js 20 ou mais novo**
+(o mesmo que o Cypress 15 exige; no Linux, instale pelo
+[nvm](https://github.com/nvm-sh/nvm)) e do **Git**. O passo a passo completo,
+com a instalação dos dois nos três sistemas, está na apostila do treinamento,
+seção 1.3.
 
-Num PowerShell (no Mac, no Terminal), uma linha de cada vez:
+Num terminal, uma linha de cada vez.
 
-```bash
+**Windows** (PowerShell):
+
+```powershell
 mkdir C:\treinamento
 cd C:\treinamento
+git clone https://github.com/jhonatangoncalvesYwp/serverest-treinamento.git
+cd serverest-treinamento
+npm install
+```
+
+**Mac e Linux** (Terminal):
+
+```bash
+mkdir ~/treinamento
+cd ~/treinamento
 git clone https://github.com/jhonatangoncalvesYwp/serverest-treinamento.git
 cd serverest-treinamento
 npm install
@@ -27,7 +41,8 @@ npm install
 ## Em toda aula
 
 ```bash
-cd C:\treinamento\serverest-treinamento
+cd C:\treinamento\serverest-treinamento     # Windows
+cd ~/treinamento/serverest-treinamento      # Mac e Linux
 npm start
 ```
 
@@ -48,7 +63,7 @@ Administrador do Treinamento**.
 não feche. Os comandos do Cypress rodam no terminal do VS Code. `Ctrl+C`
 encerra.
 
-> Rode a loja numa janela de PowerShell própria, **não** no terminal do VS
+> Rode a loja numa janela de terminal própria, **não** no terminal do VS
 > Code: abrir outra pasta no VS Code fecha os terminais da janela, e a loja
 > morreria junto.
 
