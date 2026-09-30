@@ -95,6 +95,32 @@ ao estado de instalação, **com o `npm start` parado**:
 npm run zerar
 ```
 
+## Extra: login SAML 2.0
+
+Para praticar o login de empresa (SSO por SAML 2.0) no Cypress. Não faz parte
+da loja: é um provedor de identidade (IdP) de teste e uma aplicação que exige
+login por ele, em dois contêineres. Precisa do
+[Docker Desktop](https://www.docker.com/products/docker-desktop/) aberto.
+
+```bash
+npm run saml:subir
+```
+
+| | Endereço | |
+|---|---|---|
+| Aplicação | `http://localhost:4000` | Tela "Entrar com SSO" |
+| IdP | `http://127.0.0.1:8180` | Usuários `user1` / `user1pass` e `user2` / `user2pass` |
+
+Abra a aplicação no navegador, clique em **Entrar com SSO**, entre com o
+`user1`: você volta para o **Painel**, logado. Para desligar:
+
+```bash
+npm run saml:parar
+```
+
+A configuração do Cypress para esse login (`cy.origin` + `cy.session`) está na
+pasta do treinamento, em `exemplos/saml-2.0/`.
+
 ## Se der errado
 
 | Sintoma | O que fazer |
@@ -103,6 +129,8 @@ npm run zerar
 | A loja abre, mas o login não faz nada | A API não está no ar. Confira se a janela do `npm start` continua aberta |
 | Login com o admin do treinamento falha | Algum teste alterou o admin. `Ctrl+C` e `npm start` de novo: ele é recriado |
 | `npm install` falha na rede da empresa | Proxy corporativo. Rode o `npm install` de casa, antes da aula |
+| `saml:subir` falha com `dockerDesktopLinuxEngine` ou `Cannot connect to the Docker daemon` | O Docker Desktop está fechado. Abra-o, espere ficar verde e rode de novo |
+| `saml:subir` falha com `port is already allocated` | A porta 4000 ou 8180 está em uso por outro programa |
 
 ## De onde vem cada parte
 
@@ -118,6 +146,11 @@ npm run zerar
 
   Ou seja: a loja procura a API na porta 3000 **da mesma máquina** que a
   serviu. Funciona em `localhost` e também numa máquina da rede.
+
+- **SAML** (pasta `saml/`): o IdP é a imagem
+  [kristophjunge/test-saml-idp](https://hub.docker.com/r/kristophjunge/test-saml-idp)
+  (SimpleSAMLphp); a aplicação é deste repositório, feita só para o exemplo,
+  com [`@node-saml/node-saml`](https://www.npmjs.com/package/@node-saml/node-saml).
 
 Todo o crédito do ServeRest é de [Paulo Gonçalves](https://github.com/PauloGoncalvesBH)
 e dos contribuidores do projeto.

@@ -1,0 +1,11 @@
+{
+  "name": "aplicacao-saml",
+  "private": true,
+  "description": "Aplicação mínima com login SAML 2.0, só para o exemplo do treinamento",
+  "main": "server.js",
+  "dependencies": {
+    "@node-saml/node-saml": "5.1.0",
+    "express": "4.21.2",
+    "express-session": "1.18.1"
+  }
+}

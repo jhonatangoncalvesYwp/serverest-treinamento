@@ -5,7 +5,9 @@
   "description": "ServeRest (API + loja) rodando na máquina do aluno, para o treinamento de Cypress",
   "scripts": {
     "start": "node iniciar.js",
-    "zerar": "node zerar.js"
+    "zerar": "node zerar.js",
+    "saml:subir": "docker compose -f saml/docker-compose.yml up -d --build",
+    "saml:parar": "docker compose -f saml/docker-compose.yml down"
   },
   "engines": {
     "node": ">=20"

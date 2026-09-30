@@ -1,0 +1,38 @@
+# Login SAML 2.0 para praticar: um provedor de identidade (IdP) e uma
+# aplicação que exige login por ele. Na raiz do repositório:
+#
+#   npm run saml:subir     (precisa do Docker aberto)
+#   npm run saml:parar
+#
+# Aplicação: http://localhost:4000
+# IdP:       http://127.0.0.1:8180  (usuários user1/user1pass e user2/user2pass)
+#
+# O IdP fica em 127.0.0.1 e a aplicação em localhost DE PROPÓSITO: para o
+# navegador são dois sites diferentes, como numa empresa de verdade
+# (app.empresa.com e login.empresa.com). É isso que exige o cy.origin.
+
+name: saml-treinamento
+
+services:
+  idp:
+    image: kristophjunge/test-saml-idp:1.15
+    # A imagem só existe para Intel/AMD. Em Mac com chip Apple, o Docker a
+    # roda por emulação; esta linha evita o aviso.
+    platform: linux/amd64
+    ports:
+      - "8180:8080"
+    environment:
+      # Quem pode pedir login a este IdP, e para onde ele devolve a resposta.
+      SIMPLESAMLPHP_SP_ENTITY_ID: http://localhost:4000
+      SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE: http://localhost:4000/login/callback
+
+  aplicacao:
+    build: ./aplicacao
+    ports:
+      - "4000:4000"
+    environment:
+      APP_URL: http://localhost:4000
+      IDP_URL: http://127.0.0.1:8180
+      IDP_METADATA: http://idp:8080/simplesaml/saml2/idp/metadata.php
+    depends_on:
+      - idp
